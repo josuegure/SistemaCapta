@@ -1,0 +1,76 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 18 feb 2025, 7:29:58 p.m.
+    Author     : josue
+capta
+*/
+
+.side_ankerpane{
+    -fx-background-color: #B53434;;
+    
+}
+.fondo{
+    -fx-background-color: #BEBABA;;
+    
+}
+.BotonReportes{
+       -fx-background-color: #928c8c;; /* Light blue background */
+    -fx-text-fill: black; /* Black text color */
+    -fx-font-size: 16px; /* Font size */
+    -fx-font-weight: bold; /* Bold text */
+    -fx-padding: 10px 20px; /* Padding */
+    -fx-background-radius: 0; /* Rectangular shape */
+    -fx-border-color: #928c8c;; /* Border color */
+    -fx-border-width: 2px; /* Border width */
+    -fx-border-radius: 0; /* Rectangular shape */
+    -fx-graphic-text-gap: 10px; /* Space between image and text */
+    -fx-alignment: CENTER_LEFT; /* Align text to the left with image */
+}
+
+.botonparamedicos{
+ -fx-background-color: #B53434;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 15px; /* Adjust for rounded corners */
+    -fx-border-radius: 15px;     /* Ensure border matches background's rounded corners */
+
+}
+
+.botonregistrar{
+    
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+  /* Ensure border matches background's rounded corners */
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;  /* También puedes quitar el borde si lo deseas */
+    -fx-background-radius: 0;       /* Para quitar cualquier radio de borde */
+    -fx-border-radius: 0;           /* Para quitar cualquier radio de borde */
+    -fx-padding: 0;       
+     -fx-font-weight: bold;              /* Texto en negritas */
+    -fx-text-fill: black;               /* Color del texto */
+    -fx-underline: true;                /* Subrayado */
+
+}
+
+.botonregistro{
+    -fx-background-color: #B53434;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 1px 1x;
+    -fx-background-radius: 15px; /* Adjust for rounded corners */
+    -fx-border-radius: 10px;     /* Ensure border matches background's rounded corners */
+}
+.idcontrasena{
+    -fx-background-color: transparent;
+-fx-border-color: rgb(20, 202, 29);
+-fx-border-width: 1px;
+-fx-border-radius: 5;
+-fx-prompt-text-fill: rgb(208, 211, 23);
+-fx-font-size: 14px;
+-fx-prompt-text-fill: C7C7C7;
+}
