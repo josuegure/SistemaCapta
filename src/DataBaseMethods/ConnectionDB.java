@@ -18,7 +18,7 @@ public class ConnectionDB {
     public static Connection connect() {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("Conexión exitosa a la base de datos");
+            System.out.println("Conexión exitosa a la base de datos jiji");
             return conn;
         } catch (SQLException e) {
             System.out.println("Error al conectar a la base de datos: " + e.getMessage());
