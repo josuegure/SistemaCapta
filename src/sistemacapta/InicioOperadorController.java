@@ -34,6 +34,8 @@ public class InicioOperadorController implements Initializable {
     private PasswordField txtContrasenia;  
     @FXML
     private Button btnIniciarSesion;
+        @FXML
+    private Button btnIniciarSesion2;
     private validadoperador loginService;
 
     public InicioOperadorController() {
@@ -74,7 +76,7 @@ public class InicioOperadorController implements Initializable {
         }
     }
     private void mostrarMensajeBienvenida(String numTrabajador) {
-        FunctionsOfClasses.showAlertGood(Alert.AlertType.INFORMATION, "Inicio exitoso", "Bienvenido " + numTrabajador + "!");
+        FunctionsOfClasses.showAlertGood(Alert.AlertType.INFORMATION, "Inicio exitoso", "Bienvenido operador #" + numTrabajador + "!");
     }
 
     private void mostrarError(String mensaje) {
@@ -84,7 +86,7 @@ public class InicioOperadorController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/sistemacapta/SeleccionUsuario.fxml"));
             Parent root = loader.load();
-            Stage stage = (Stage) btnIniciarSesion.getScene().getWindow();
+            Stage stage = (Stage) btnIniciarSesion2.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Seleccionar Usuario");
         } catch (Exception e) {

@@ -26,9 +26,3 @@ public class ConnectionDB {
         }
     }  
 }
-
-
-/*public class DatabaseConnection {
-
-
-}*/

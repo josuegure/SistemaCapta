@@ -29,7 +29,7 @@ private void SendToOperador(ActionEvent event) {
 }
 @FXML
 private void SendToPrueba(ActionEvent event) {
-    String fxmlFile = "/sistemacapta/FXMLprueba.fxml"; // Ajusta la ruta según tu estructura de paquetes
+    String fxmlFile = "/sistemacapta/InicioOperador.fxml"; // Ajusta la ruta según tu estructura de paquetes
     functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
 }
 @FXML
@@ -37,5 +37,9 @@ private void SendToNuevoOperador(ActionEvent event) {
     String fxmlFile = "/sistemacapta/NuevoUsuarioOperador.fxml"; // Ajusta la ruta según tu estructura de paquetes
     functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
 }
-
+@FXML
+private void SendToNewOperador(ActionEvent event) {
+    String fxmlFile = "/sistemacapta/InicioOperador.fxml"; // Ajusta la ruta según tu estructura de paquetes
+    functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
+}
 }
