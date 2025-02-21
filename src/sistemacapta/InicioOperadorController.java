@@ -84,7 +84,7 @@ public class InicioOperadorController implements Initializable {
     }
         private void mostrarVentanaSeleccion() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sistemacapta/SeleccionUsuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sistemacapta/ReportesOperadores.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) btnIniciarSesion2.getScene().getWindow();
             stage.setScene(new Scene(root));

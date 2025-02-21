@@ -11,14 +11,14 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="514.0" styleClass="fondo" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemacapta.SeleccionUsuarioController">
+<AnchorPane id="AnchorPane" prefHeight="514.0" prefWidth="1047.0" styleClass="fondo" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemacapta.SeleccionUsuarioController">
    <children>
       <Label layoutX="205.0" layoutY="401.0" text="Registrar" />
       <Button layoutX="623.0" layoutY="335.0" mnemonicParsing="false" onAction="#SendToPrueba" prefHeight="40.0" prefWidth="139.0" styleClass="botonparamedicos" stylesheets="@style.css" text="   Paramédicos" />
       <Button layoutX="220.0" layoutY="335.0" mnemonicParsing="false" onAction="#SendToOperador" prefHeight="39.0" prefWidth="139.0" styleClass="botonparamedicos" stylesheets="@style.css" text="   Operadores" />
-      <HBox prefHeight="77.0" prefWidth="1035.0">
+      <HBox prefHeight="77.0" prefWidth="1047.0">
          <children>
-            <AnchorPane prefHeight="77.0" prefWidth="1037.0" styleClass="side_ankerpane">
+            <AnchorPane prefHeight="77.0" prefWidth="1049.0" styleClass="side_ankerpane">
                <stylesheets>
                   <URL value="@../../../ServicioSocial/src/serviciosocial/style.css" />
                   <URL value="@style.css" />
@@ -29,7 +29,7 @@
                         <Image url="@../imgs/logo1capta%20SF.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="86.0" fitWidth="189.0" layoutX="846.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="62.0" fitWidth="195.0" layoutX="790.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imgs/logo2capta%20SF.png" />
                      </image>
@@ -58,7 +58,7 @@
             </ImageView>
          </children>
       </Group>
-      <AnchorPane layoutY="448.0" prefHeight="77.0" prefWidth="1035.0" styleClass="side_ankerpane">
+      <AnchorPane layoutY="448.0" prefHeight="77.0" prefWidth="1047.0" styleClass="side_ankerpane">
          <stylesheets>
             <URL value="@../../../ServicioSocial/src/serviciosocial/style.css" />
             <URL value="@style.css" />

@@ -61,7 +61,7 @@ public class NuevoUsuarioOperadorController implements Initializable {
         }
 
         // Insertar operador si la contraseña del admin es correcta
-        if (InsertarNuevoOperador.insertarNuevoOperador(numTrabajador, contrasenia)) {
+        if (InsertarNuevoOperador.insertarNuevoOperador(numTrabajador, contrasenia, contraseniaAdmin)) {
             mostrarMensajeExito("El operador se registró exitosamente.");
             limpiarCampos();
         } else {

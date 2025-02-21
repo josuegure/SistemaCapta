@@ -29,15 +29,15 @@ public class InsertarNuevoOperador {
     }
 
     // Método para insertar un nuevo operador
-    public static boolean insertarNuevoOperador(String numTrabajador, String contrasenia) {
-        String query = "INSERT INTO operadores (Num_trabajador_op, contrasenia) VALUES (?, ?)";
+    public static boolean insertarNuevoOperador(String numTrabajador, String contrasenia, String contraseniaAdmin) {
+        String query = "INSERT INTO operadores (Num_trabajador_op, contrasenia, contrasenia_admin_OP) VALUES (?, ?, ?)";
 
         try (Connection conn = ConnectionDB.connect();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setString(1, numTrabajador);
             pstmt.setString(2, contrasenia);
-
+            pstmt.setString(3, contraseniaAdmin);
             int filasInsertadas = pstmt.executeUpdate();
             return filasInsertadas > 0;
         } catch (Exception e) {

@@ -74,3 +74,47 @@ capta
 -fx-font-size: 14px;
 -fx-prompt-text-fill: C7C7C7;
 }
+
+.Botonseleccionado{
+      -fx-background-color: #FC0808; /* Light blue background */
+    -fx-text-fill: black; /* Black text color */
+    -fx-font-size: 16px; /* Font size */
+    -fx-font-weight: bold; /* Bold text */
+    -fx-padding: 10px 20px; /* Padding */
+    -fx-background-radius: 0; /* Rectangular shape */
+    -fx-border-color: #FC0808; /* Border color */
+    -fx-border-width: 2px; /* Border width */
+    -fx-border-radius: 0; /* Rectangular shape */
+    -fx-graphic-text-gap: 10px; /* Space between image and text */
+    -fx-alignment: CENTER_LEFT; /* Align text to the left with image */
+}
+.BotonNOseleccionado{
+      -fx-background-color: #B53434; /* Light blue background */
+    -fx-text-fill: black; /* Black text color */
+    -fx-font-size: 16px; /* Font size */
+    -fx-font-weight: bold; /* Bold text */
+    -fx-padding: 10px 20px; /* Padding */
+    -fx-background-radius: 0; /* Rectangular shape */
+    -fx-border-color: #B53434; /* Border color */
+    -fx-border-width: 2px; /* Border width */
+    -fx-border-radius: 0; /* Rectangular shape */
+    -fx-graphic-text-gap: 10px; /* Space between image and text */
+    -fx-alignment: CENTER_LEFT; /* Align text to the left with image */
+}
+.BotonSalir{
+      -fx-background-color: #C70909; /* Light blue background */
+    -fx-text-fill: black; /* Black text color */
+    -fx-font-size: 16px; /* Font size */
+    -fx-font-weight: bold; /* Bold text */
+    -fx-padding: 10px 20px; /* Padding */
+    -fx-background-radius: 0; /* Rectangular shape */
+    -fx-border-color: #C70909; /* Border color */
+    -fx-border-width: 2px; /* Border width */
+    -fx-border-radius: 0; /* Rectangular shape */
+    -fx-graphic-text-gap: 10px; /* Space between image and text */
+    -fx-alignment: CENTER_LEFT; /* Align text to the left with image */
+}
+.panel{
+    -fx-background-color: #b53434;
+    
+}
