@@ -26,7 +26,7 @@ public class FunctionsOfClasses {
         alert.setHeaderText(null);
         alert.setContentText(message);
         
-         String imagePath = "/imgs/success.png";
+        String imagePath = "/imgs/success.png";
         Image iconImage = new Image(imagePath);
 
         // Crear un ImageView para el icono
