@@ -14,7 +14,7 @@
 <AnchorPane id="AnchorPane" prefHeight="514.0" prefWidth="1047.0" styleClass="fondo" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemacapta.SeleccionUsuarioController">
    <children>
       <Label layoutX="205.0" layoutY="401.0" text="Registrar" />
-      <Button layoutX="623.0" layoutY="335.0" mnemonicParsing="false" onAction="#SendToPrueba" prefHeight="40.0" prefWidth="139.0" styleClass="botonparamedicos" stylesheets="@style.css" text="   Paramédicos" />
+      <Button layoutX="623.0" layoutY="335.0" mnemonicParsing="false" onAction="#SendToParamedico" prefHeight="40.0" prefWidth="139.0" styleClass="botonparamedicos" stylesheets="@style.css" text="   Paramédicos" />
       <Button layoutX="220.0" layoutY="335.0" mnemonicParsing="false" onAction="#SendToOperador" prefHeight="39.0" prefWidth="139.0" styleClass="botonparamedicos" stylesheets="@style.css" text="   Operadores" />
       <HBox prefHeight="77.0" prefWidth="1047.0">
          <children>
@@ -78,7 +78,7 @@
          </font>
       </Label>
       <Label layoutX="616.0" layoutY="404.0" text="Registrar" />
-      <Button layoutX="671.0" layoutY="401.0" mnemonicParsing="false" styleClass="botonregistrar" stylesheets="@style.css" text="nuevo usuario" />
+      <Button layoutX="671.0" layoutY="401.0" mnemonicParsing="false" onAction="#SendToNuevoParamedico" styleClass="botonregistrar" stylesheets="@style.css" text="nuevo usuario" />
       <Label layoutX="684.0" layoutY="377.0" prefHeight="22.0" prefWidth="17.0" text="o">
          <font>
             <Font size="15.0" />

@@ -15,7 +15,7 @@ public class SistemaCapta extends Application {
              
 
             // Cargar el archivo FXML
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("SeleccionUsuario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ReportesOperadores.fxml"));
             Parent root = loader.load();
 
             // Crear la escena y establecerla en el escenario

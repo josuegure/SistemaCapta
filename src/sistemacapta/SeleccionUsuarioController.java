@@ -28,8 +28,8 @@ private void SendToOperador(ActionEvent event) {
     functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
 }
 @FXML
-private void SendToPrueba(ActionEvent event) {
-    String fxmlFile = "/sistemacapta/InicioOperador.fxml"; // Ajusta la ruta según tu estructura de paquetes
+private void SendToParamedico(ActionEvent event) {
+    String fxmlFile = "/sistemacapta/InicioParamedico.fxml"; // Ajusta la ruta según tu estructura de paquetes
     functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
 }
 @FXML
@@ -38,8 +38,8 @@ private void SendToNuevoOperador(ActionEvent event) {
     functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
 }
 @FXML
-private void SendToNewOperador(ActionEvent event) {
-    String fxmlFile = "/sistemacapta/InicioOperador.fxml"; // Ajusta la ruta según tu estructura de paquetes
+private void SendToNuevoParamedico(ActionEvent event) {
+    String fxmlFile = "/sistemacapta/NuevoUsuarioParamedico.fxml"; // Ajusta la ruta según tu estructura de paquetes
     functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
 }
 }

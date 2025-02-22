@@ -118,3 +118,37 @@ capta
     -fx-background-color: #b53434;
     
 }
+
+.combo-box {
+    -fx-background-color: #b53434; /* Fondo rojo oscuro */
+    -fx-border-color: #bebaba; /* Borde gris claro */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white; /* Texto en blanco */
+}
+
+.combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.combo-box .arrow {
+    -fx-background-color: white; /* Flecha blanca */
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #bebaba; /* Fondo de lista gris claro */
+    -fx-border-color: #b53434; /* Borde rojo oscuro */
+}
+
+.combo-box-popup .list-cell {
+    -fx-background-color: #bebaba; /* Fondo gris claro */
+    -fx-text-fill: #333; /* Texto oscuro */
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #b53434; /* Rojo oscuro al pasar el mouse */
+    -fx-text-fill: white;
+}
