@@ -15,17 +15,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="625.0" prefWidth="1054.0" styleClass="fondo" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemacapta.ReportesOperadoresController">
-    <stylesheets>
-        <URL value="@style.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" prefHeight="626.0" prefWidth="1054.0" styleClass="fondo" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemacapta.ModificarReporteOperadorController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b53434" height="91.0" stroke="#b53434" strokeType="INSIDE" width="1054.0" />
-      <AnchorPane layoutY="90.0" prefHeight="545.0" prefWidth="155.0" styleClass="panel" stylesheets="@style.css">
+      <AnchorPane layoutY="90.0" prefHeight="536.0" prefWidth="155.0" styleClass="panel">
          <children>
             <Pane layoutY="-14.0" prefHeight="71.0" prefWidth="147.0">
                <children>
-                  <Button layoutY="15.0" mnemonicParsing="false" onAction="#Salir" prefHeight="49.0" prefWidth="155.0" styleClass="Botonseleccionado" stylesheets="@style.css" text="       Formato" />
+                  <Button layoutY="15.0" mnemonicParsing="false" onAction="#SendToFormato" prefHeight="49.0" prefWidth="155.0" styleClass="BotonNOseleccionado" stylesheets="@style.css" text="       Formato" />
                   <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="11.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imgs/documento.png" />
@@ -35,7 +32,7 @@
             </Pane>
             <Pane layoutY="35.0" prefHeight="71.0" prefWidth="147.0">
                <children>
-                  <Button layoutY="15.0" mnemonicParsing="false" onAction="#Salir" prefHeight="49.0" prefWidth="155.0" styleClass="BotonNOseleccionado" stylesheets="@style.css" text="       Incidentes" />
+                  <Button layoutY="15.0" mnemonicParsing="false" onAction="#SendToIncidentes" prefHeight="49.0" prefWidth="155.0" styleClass="BotonNOseleccionado" stylesheets="@style.css" text="       Incidentes" />
                   <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="10.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imgs/RegistrosImg.png" />
@@ -55,7 +52,7 @@
             </Pane>
             <Pane layoutX="-1.0" layoutY="86.0" prefHeight="71.0" prefWidth="147.0">
                <children>
-                  <Button layoutY="12.0" mnemonicParsing="false" onAction="#SendToModificar" prefHeight="49.0" prefWidth="155.0" styleClass="BotonNOseleccionado" stylesheets="@style.css" text="       Modificar" />
+                  <Button layoutY="12.0" mnemonicParsing="false" onAction="#SendToFormato" prefHeight="49.0" prefWidth="155.0" styleClass="Botonseleccionado" stylesheets="@style.css" text="       Modificar" />
                   <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="16.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imgs/modificar.png" />
@@ -64,29 +61,17 @@
                </children>
             </Pane>
          </children>
+         <stylesheets>
+            <URL value="@style.css" />
+            <URL value="@style.css" />
+         </stylesheets>
       </AnchorPane>
       <ImageView fitHeight="73.0" fitWidth="200.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imgs/logo1capta%20SF.png" />
          </image>
       </ImageView>
-      <Label layoutX="214.0" layoutY="109.0" text="Registrar incidencia">
-         <font>
-            <Font name="Bernard MT Condensed" size="41.0" />
-         </font>
-      </Label>
-      <Label layoutX="214.0" layoutY="160.0" text="Por favor rellena la información requerdia" textFill="#614444">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Label>
-      <Label layoutX="214.0" layoutY="188.0" text="Folio">
-         <font>
-            <Font name="Dubai Bold" size="15.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtFolio" layoutX="214.0" layoutY="216.0" prefHeight="25.0" prefWidth="82.0" promptText="Folio" />
-      <Group layoutX="214.0" layoutY="241.0">
+      <Group layoutX="224.0" layoutY="251.0">
          <children>
             <Label layoutY="34.0" text="Calle">
                <font>
@@ -113,7 +98,7 @@
             </Label>
          </children>
       </Group>
-      <Group layoutX="214.0" layoutY="343.0">
+      <Group layoutX="224.0" layoutY="353.0">
          <children>
             <Label text="Información del incidente" textFill="#828282">
                <font>
@@ -146,7 +131,7 @@
             <DatePicker fx:id="datePickerFecha" layoutX="572.0" layoutY="55.0" />
          </children>
       </Group>
-      <Group layoutX="214.0" layoutY="431.0">
+      <Group layoutX="224.0" layoutY="441.0">
          <children>
             <Label layoutY="24.0" text="Especificaciones">
                <font>
@@ -163,21 +148,39 @@
                   <Font name="Dubai Bold" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="btnRegistrar" layoutX="644.0" layoutY="155.0" mnemonicParsing="false" styleClass="botonparamedicos" stylesheets="@style.css" text="Registrar" />
+            <Button fx:id="btnActualizar" layoutX="644.0" layoutY="142.0" mnemonicParsing="false" onAction="#actualizarReporte" styleClass="botonparamedicos" stylesheets="@style.css" text="Modifcar" />
             <TextArea fx:id="txtEspecificaciones" layoutY="55.0" prefHeight="118.0" prefWidth="272.0" />
             <TextArea fx:id="txtResultados" layoutX="342.0" layoutY="55.0" prefHeight="91.0" prefWidth="272.0" />
          </children>
       </Group>
-      <Label layoutX="644.0" layoutY="182.0" text="Medio de contacto" textFill="#828282">
+      <Label layoutX="224.0" layoutY="119.0" text="Modificar incidencia">
          <font>
-            <Font name="Dubai Bold" size="15.0" />
+            <Font name="Bernard MT Condensed" size="41.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboGenero" layoutX="878.0" layoutY="214.0" prefHeight="32.0" prefWidth="133.0" promptText="Género" />
-      <Label layoutX="877.0" layoutY="187.0" text="Género" />
-      <ComboBox fx:id="comboContacto" layoutX="644.0" layoutY="213.0" prefHeight="32.0" prefWidth="186.0" promptText="Medio de contacto" />
-      <ComboBox fx:id="comboTipoAtendido" layoutX="319.0" layoutY="213.0" prefHeight="32.0" prefWidth="200.0" promptText="Tipo de atención" />
-      <TextField fx:id="txtOtroTipoAtendido" layoutX="531.0" layoutY="214.0" prefHeight="25.0" prefWidth="82.0" />
-      <TextField fx:id="txtOtroContacto" layoutX="763.0" layoutY="157.0" prefHeight="25.0" prefWidth="82.0" />
+      <Label layoutX="224.0" layoutY="170.0" text="Por favor rellena la información requerdia" textFill="#614444">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Group layoutX="224.0" layoutY="167.0">
+         <children>
+            <TextField fx:id="txtFolio" layoutY="59.0" prefHeight="25.0" prefWidth="82.0" promptText="Folio" />
+            <Label layoutX="430.0" layoutY="25.0" text="Medio de contacto" textFill="#828282">
+               <font>
+                  <Font name="Dubai Bold" size="15.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="comboGenero" layoutX="664.0" layoutY="57.0" prefHeight="32.0" prefWidth="133.0" promptText="Género" />
+            <Label layoutX="663.0" layoutY="30.0" text="Género" />
+            <ComboBox fx:id="comboContacto" layoutX="430.0" layoutY="56.0" prefHeight="32.0" prefWidth="186.0" promptText="Medio de contacto" />
+            <ComboBox fx:id="comboTipoAtendido" layoutX="105.0" layoutY="56.0" prefHeight="32.0" prefWidth="200.0" promptText="Tipo de atención" />
+            <TextField fx:id="txtOtroTipoAtendido" layoutX="317.0" layoutY="57.0" prefHeight="25.0" prefWidth="82.0" />
+            <TextField fx:id="txtOtroContacto" layoutX="549.0" prefHeight="25.0" prefWidth="82.0" />
+         </children>
+      </Group>
+      <Button fx:id="bntBuscar" layoutX="927.0" layoutY="332.0" mnemonicParsing="false" onAction="#buscarReporte" styleClass="botonparamedicos" stylesheets="@style.css" text="Buscar" />
+      <Label layoutX="597.0" layoutY="119.0" text="original" />
+      <Button layoutX="814.0" layoutY="107.0" mnemonicParsing="false" onAction="#Salir" text="Button" />
    </children>
 </AnchorPane>

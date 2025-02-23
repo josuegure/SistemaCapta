@@ -129,28 +129,14 @@ public class ReportesOperadoresController implements Initializable {
        // limpiarCampos();
     }
 
-    /*private void limpiarCampos() {
-        txtFolio.clear();
-        txtCalle.clear();
-        txtColonia.clear();
-        txtReferencia.clear();
-        txtEspecificaciones.clear();
-        txtResultados.clear();
-        comboGenero.getSelectionModel().clearSelection();
-        comboClasificacion.getSelectionModel().clearSelection();
-        comboDiaSemana.getSelectionModel().clearSelection();
-        comboTipoAtendido.getSelectionModel().clearSelection();
-        comboContacto.getSelectionModel().clearSelection();
-        comboGrupoAtencion.setValue(null);
-        checkItems.forEach(item -> item.setSelected(false)); // Limpiar selección de CheckBoxes
-        datePickerFecha.setValue(null);
-        txtOtroContacto.clear();  // Limpiar el campo "Otro" contacto
-        txtOtroTipoAtendido.clear(); // Limpiar el campo "Otro" tipo atendido
-    }*/
-
     @FXML
     private void SendToIncidentes(ActionEvent event) {
-        String fxmlFile = "/sistemacapta/InicioOperador.fxml";
+        String fxmlFile = "/sistemacapta/ModificarReporteO.fxml";
+        functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
+    }
+        @FXML
+    private void SendToModificar(ActionEvent event) {
+        String fxmlFile = "/sistemacapta/ModificarReporteOperador.fxml";
         functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
     }
 
