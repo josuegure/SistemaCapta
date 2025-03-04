@@ -44,7 +44,7 @@
             <Image url="@../imgs/logo2capta%20SF.png" />
          </image>
       </ImageView>
-      <PasswordField fx:id="txtContrasenia" layoutX="457.0" layoutY="350.0" promptText="Contraseña" stylesheets="@style.css" />
+      <PasswordField fx:id="txtContrasenia" layoutX="457.0" layoutY="350.0" onKeyPressed="#handleKeyPress" promptText="Contraseña" stylesheets="@style.css" />
       <Button fx:id="btnIniciarSesion2" layoutX="471.0" layoutY="394.0" mnemonicParsing="false" onAction="#iniciarSesion" styleClass="botonparamedicos" stylesheets="@style.css" text="Iniciar sesión" />
    </children>
 </AnchorPane>

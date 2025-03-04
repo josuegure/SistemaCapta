@@ -1,38 +1,48 @@
 package sistemacapta;
 
+import functions.FunctionsOfClasses;
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyEvent;
 
 public class ModificarReporteOperadorController implements Initializable {
 
-    @FXML private TextField txtFolio, txtCalle, txtColonia, txtReferencia, txtContacto, txtTipoAtendido;
+    @FXML private TextField txtFolio, txtEmpleado, txtCalle, txtColonia, txtReferencia, txtContacto, txtTipoAtendido;
     @FXML private TextArea txtEspecificaciones, txtResultados;
     @FXML private ComboBox<String> comboGenero, comboClasificacion, comboDiaSemana, comboGrupoAtencion, comboContacto, comboTipoAtendido;
     @FXML private DatePicker datePickerFecha;
     @FXML private Button btnBuscar, btnActualizar;
-
+    private List<CheckMenuItem> checkItems = new ArrayList<>();
     private Connection connection;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Inicializa ComboBoxes
         comboGenero.setItems(FXCollections.observableArrayList("Masculino", "Femenino"));
-        comboClasificacion.setItems(FXCollections.observableArrayList("Rescate acuático", "Asistencias médicas", "Muerte por sumersión"));
+        comboClasificacion.setItems(FXCollections.observableArrayList("Rescate acuático", "Accidentes Acuáticos", "Apoyo a prestadores de servicios turista", 
+        "Muerte por sumersión", "Incendio de casa habitación y/o vehículo", "Desaparecido en el mar", "Muerte Natural/Accidental", "Suicidio", "Homicidio"
+        ,"Menores localizados", "Adultos localizados", "Quejas/Fraudes/Extorsión", "Robo con violencia", "Fraude cibernético", "Desove de tortugas"
+        ,"Asistencias mecánicas SSP/Asist Vial", "Asist locales CAPTA", "Angeles verdes/Asist mecánicas", "Falsas alarmas/no efectadas", "Extranjeros", "Asistencias turísticas"));
         comboDiaSemana.setItems(FXCollections.observableArrayList("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"));
-        comboGrupoAtencion.setItems(FXCollections.observableArrayList("CAPTA", "Policía vial", "Cruz roja", "Bomberos"));
+        //comboGrupoAtencion.setItems(FXCollections.observableArrayList("CAPTA", "Policía vial", "Cruz roja", "Bomberos"));
                 comboContacto.setItems(FXCollections.observableArrayList("Whatsapp", "Llamada", "Otro"));
-        comboTipoAtendido.setItems(FXCollections.observableArrayList("local","turista", "Sin especificar"));
+        comboTipoAtendido.setItems(FXCollections.observableArrayList("Local","Turista", "Sin especificar"));
 
         // Conectar a la base de datos
         conectarBaseDatos();
-
+        // Configurar el ComboBox con CheckBoxes
+        configurarComboBoxGrupoAtencion();
+        
         // Vincular botones con sus acciones
       /*  btnBuscar.setOnAction(event -> buscarReporte());
         btnActualizar.setOnAction(event -> actualizarReporte());*/
@@ -51,8 +61,9 @@ public class ModificarReporteOperadorController implements Initializable {
         String folio = txtFolio.getText();
 
         if (folio.isEmpty()) {
-            mostrarAlerta("Advertencia", "Ingrese un folio para buscar el reporte", AlertType.WARNING);
-            return;
+        FunctionsOfClasses.showAlertFail(Alert.AlertType.WARNING, "Advertencia", "Ingrese un folio para buscar el reporte.");
+        return;
+
         }
 
         String sql = "SELECT * FROM reporteoperadores WHERE folio = ?";
@@ -61,6 +72,7 @@ public class ModificarReporteOperadorController implements Initializable {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
+                txtEmpleado.setText(resultSet.getString("Numero_operador"));
                 txtCalle.setText(resultSet.getString("calle"));
                 txtColonia.setText(resultSet.getString("colonia"));
                 txtReferencia.setText(resultSet.getString("referencia"));
@@ -76,15 +88,46 @@ public class ModificarReporteOperadorController implements Initializable {
                 comboDiaSemana.setValue(resultSet.getString("dia_semana"));
                 comboGrupoAtencion.setValue(resultSet.getString("grupo_atencion"));
                 datePickerFecha.setValue(resultSet.getDate("fecha").toLocalDate());
-            } else {
-                mostrarAlerta("Información", "No se encontró un reporte con ese folio", AlertType.INFORMATION);
-            }
-        } catch (SQLException e) {
-            mostrarAlerta("Error", "Error al buscar el reporte", AlertType.ERROR);
-            e.printStackTrace();
+                         //FunctionsOfClasses.showAlertGood(Alert.AlertType.INFORMATION, "Éxito", "Reporte encontrado exitosamente.");
+        } else {
+            FunctionsOfClasses.showAlertFail(Alert.AlertType.WARNING, "Información", "No se encontró un reporte con ese folio.");
         }
+    } catch (SQLException e) {
+        FunctionsOfClasses.showAlertFail(Alert.AlertType.ERROR, "Error", "Error al buscar el reporte.");
+        e.printStackTrace();
     }
 
+        }
+    @FXML
+private void handleKeyPress(KeyEvent event) {
+    if (event.getCode().toString().equals("ENTER")) {
+        buscarReporte();
+    }
+}
+    
+private void configurarComboBoxGrupoAtencion() {
+        ObservableList<String> opciones = FXCollections.observableArrayList("CAPTA", "Policía vial", "Cruz roja", "Bomberos");
+
+        ContextMenu contextMenu = new ContextMenu();
+        for (String opcion : opciones) {
+            CheckMenuItem checkMenuItem = new CheckMenuItem(opcion);
+            checkMenuItem.setOnAction(e -> actualizarSeleccionComboBox());
+            checkItems.add(checkMenuItem);
+            contextMenu.getItems().add(checkMenuItem);
+        }
+
+        // Al hacer clic en el ComboBox, mostrar el menú con CheckBoxes
+        comboGrupoAtencion.setOnMouseClicked(e -> contextMenu.show(comboGrupoAtencion, e.getScreenX(), e.getScreenY()));
+    }
+    private void actualizarSeleccionComboBox() {
+        List<String> seleccionados = new ArrayList<>();
+        for (CheckMenuItem item : checkItems) {
+            if (item.isSelected()) {
+                seleccionados.add(item.getText());
+            }
+        }
+        comboGrupoAtencion.setValue(String.join(", ", seleccionados)); // Mostrar selección en el ComboBox
+    }
     @FXML
     private void actualizarReporte() {
         String folio = txtFolio.getText();
@@ -103,41 +146,42 @@ public class ModificarReporteOperadorController implements Initializable {
             return;
         }
 
-        String sql = "UPDATE reporteoperadores SET calle=?, colonia=?, referencia=?, especificaciones=?, resultados=?, "
+        String sql = "UPDATE reporteoperadores SET Numero_operador=?, calle=?, colonia=?, referencia=?, especificaciones=?, resultados=?, "
                    + "genero=?, clasificacion=?, dia_semana=?, contacto=?, tipo_atendido=?, grupo_atencion=?, fecha=? "
                    + "WHERE folio=?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, txtCalle.getText());
-            statement.setString(2, txtColonia.getText());
-            statement.setString(3, txtReferencia.getText());
-            statement.setString(4, txtEspecificaciones.getText());
-            statement.setString(5, txtResultados.getText());
-            statement.setString(6, comboGenero.getValue());
-            statement.setString(7, comboClasificacion.getValue());
-            statement.setString(8, comboDiaSemana.getValue());
+            statement.setString(1, txtEmpleado.getText());
+            statement.setString(2, txtCalle.getText());
+            statement.setString(3, txtColonia.getText());
+            statement.setString(4, txtReferencia.getText());
+            statement.setString(5, txtEspecificaciones.getText());
+            statement.setString(6, txtResultados.getText());
+            statement.setString(7, comboGenero.getValue());
+            statement.setString(8, comboClasificacion.getValue());
+            statement.setString(9, comboDiaSemana.getValue());
            // statement.setString(9, txtContacto.getText());
             //statement.setString(10, txtTipoAtendido.getText());
-             statement.setString(9, comboContacto.getValue());
-            statement.setString(10, comboTipoAtendido.getValue());
-            statement.setString(11, comboGrupoAtencion.getValue());
-            statement.setDate(12, Date.valueOf(datePickerFecha.getValue()));
-            statement.setInt(13, folioInt);  // Actualizar el folio con el valor entero
+             statement.setString(10, comboContacto.getValue());
+            statement.setString(11, comboTipoAtendido.getValue());
+            statement.setString(12, comboGrupoAtencion.getValue());
+            statement.setDate(13, Date.valueOf(datePickerFecha.getValue()));
+            statement.setInt(14, folioInt);  // Actualizar el folio con el valor entero
 
             // Mostrar mensaje de depuración
             System.out.println("Ejecutando actualización para el folio: " + folioInt);
 
             int filasActualizadas = statement.executeUpdate();
 
-            if (filasActualizadas > 0) {
-                mostrarAlerta("Éxito", "Reporte actualizado correctamente", AlertType.INFORMATION);
-            } else {
-                mostrarAlerta("Advertencia", "No se encontró un reporte con ese folio", AlertType.WARNING);
-            }
-        } catch (SQLException e) {
-            mostrarAlerta("Error", "Error al actualizar el reporte", AlertType.ERROR);
-            e.printStackTrace();
+if (filasActualizadas > 0) {
+            FunctionsOfClasses.showAlertGood(Alert.AlertType.INFORMATION, "Éxito", "Reporte actualizado correctamente.");
+        } else {
+            FunctionsOfClasses.showAlertFail(Alert.AlertType.WARNING, "Advertencia", "No se encontró un reporte con ese folio.");
         }
+    } catch (SQLException e) {
+        FunctionsOfClasses.showAlertFail(Alert.AlertType.ERROR, "Error", "Error al actualizar el reporte.");
+        e.printStackTrace();
+    }
     }
 
     private void mostrarAlerta(String titulo, String mensaje, AlertType tipo) {
@@ -156,7 +200,7 @@ public class ModificarReporteOperadorController implements Initializable {
 
     @FXML
     private void SendToIncidentes(ActionEvent event) {
-        String fxmlFile = "/sistemacapta/ReportesOperadores.fxml"; // Ajusta la ruta según tu estructura de paquetes
+        String fxmlFile = "/sistemacapta/GenerarReporteOperador.fxml"; // Ajusta la ruta según tu estructura de paquetes
         functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
     }
 
@@ -164,5 +208,7 @@ public class ModificarReporteOperadorController implements Initializable {
     private void Salir(ActionEvent event) {
         String fxmlFile = "/sistemacapta/SeleccionUsuario.fxml";
         functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
+        System.out.println(System.getProperty("javafx.runtime.version"));
+
     }
 }

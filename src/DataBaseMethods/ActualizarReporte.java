@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class ActualizarReporte {
     public static boolean actualizarReporte(Map<String, String> datos) {
-        String sql = "UPDATE reporteoperadores SET calle=?, colonia=?, referencia=?, especificaciones=?, resultados=?, +"
+        String sql = "UPDATE reporteoperadores SET Numero_operador=?, calle=?, colonia=?, referencia=?, especificaciones=?, resultados=?, +"
                      +  "genero=?, clasificacion=?, dia_semana=?, contacto=?, tipo_atendido=?, grupo_atencion=?, fecha=? +"
                       + "WHERE folio=?";
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sistemacapta", "root", "josue");
@@ -32,7 +32,7 @@ public class ActualizarReporte {
             statement.setString(11, datos.get("grupo_atencion"));
             statement.setDate(12, Date.valueOf(LocalDate.parse(datos.get("fecha"))));
             statement.setInt(13, Integer.parseInt(datos.get("folio")));
-            
+            statement.setInt(14, Integer.parseInt(datos.get("Numero_operador")));
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

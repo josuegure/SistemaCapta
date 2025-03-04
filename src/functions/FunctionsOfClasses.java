@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import java.io.IOException;
+import java.util.Optional;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.StageStyle;
@@ -43,7 +45,31 @@ public class FunctionsOfClasses {
         
         alert.showAndWait();
     }
-    
+    // 🔹 Nueva alerta de confirmación personalizada con imagen "pregunta"
+    public static boolean showAlertConfirm(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(message);
+        alert.setContentText("Esta acción no se puede deshacer.");
+
+        String imagePath = "/imgs/pregunta.png";
+        Image iconImage = new Image(imagePath);
+
+        ImageView iconImageView = new ImageView(iconImage);
+        iconImageView.setFitWidth(48);
+        iconImageView.setFitHeight(48);
+
+        alert.setGraphic(iconImageView);
+        alert.initStyle(StageStyle.UNDECORATED);
+
+        ButtonType botonSi = new ButtonType("Sí");
+        ButtonType botonCancelar = new ButtonType("Cancelar");
+
+        alert.getButtonTypes().setAll(botonSi, botonCancelar);
+
+        Optional<ButtonType> resultado = alert.showAndWait();
+        return resultado.isPresent() && resultado.get() == botonSi;
+    }
       public static void showAlertFail(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

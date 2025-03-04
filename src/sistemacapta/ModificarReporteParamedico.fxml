@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="626.0" prefWidth="1054.0" styleClass="fondo" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemacapta.ModificarReporteParamedicoController">
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
+   <children>
+      <AnchorPane layoutY="82.0" prefHeight="536.0" prefWidth="155.0" styleClass="panel">
+         <children>
+            <Pane layoutY="-14.0" prefHeight="71.0" prefWidth="147.0">
+               <children>
+                  <Button layoutY="15.0" mnemonicParsing="false" onAction="#SendToFormato" prefHeight="49.0" prefWidth="155.0" styleClass="BotonNOseleccionado" stylesheets="@style.css" text="       Formato" />
+                  <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="11.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/documento.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane layoutY="35.0" prefHeight="71.0" prefWidth="147.0">
+               <children>
+                  <Button layoutY="15.0" mnemonicParsing="false" onAction="#SendToIncidentes" prefHeight="49.0" prefWidth="155.0" styleClass="BotonNOseleccionado" stylesheets="@style.css" text="       Incidentes" />
+                  <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="10.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/RegistrosImg.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane layoutY="474.0" prefHeight="71.0" prefWidth="147.0">
+               <children>
+                  <Button layoutY="20.0" mnemonicParsing="false" onAction="#Salir" prefHeight="49.0" prefWidth="155.0" styleClass="BotonSalir" stylesheets="@style.css" text="          Salir" />
+                  <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="11.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/cerrar_sesion.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane layoutX="-1.0" layoutY="86.0" prefHeight="71.0" prefWidth="147.0">
+               <children>
+                  <Button layoutY="12.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="155.0" styleClass="Botonseleccionado" stylesheets="@style.css" text="       Modificar" />
+                  <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="16.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/modificar.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+         <stylesheets>
+            <URL value="@style.css" />
+            <URL value="@style.css" />
+         </stylesheets>
+      </AnchorPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b53434" height="91.0" layoutY="-1.0" stroke="#b53434" strokeType="INSIDE" width="1054.0" />
+      <ImageView fitHeight="73.0" fitWidth="200.0" layoutX="14.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imgs/logo1capta%20SF.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="214.0" layoutY="109.0" text="Modificar reporte de atención">
+         <font>
+            <Font name="Bernard MT Condensed" size="34.0" />
+         </font>
+      </Label>
+      <Label layoutX="214.0" layoutY="152.0" text="Por favor rellena la información requerdia" textFill="#614444">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

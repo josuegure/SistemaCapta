@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 
 /**
  * FXML Controller class
@@ -93,6 +94,13 @@ public class InicioOperadorController implements Initializable {
             e.printStackTrace();
         }
     }
+        @FXML
+private void handleKeyPress(KeyEvent event) {
+    if (event.getCode().toString().equals("ENTER")) {
+        iniciarSesion();
+    }
+}
+}
     /*private void mostrarMensajeBienvenida(String numTrabajador) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Inicio exitoso");
@@ -118,5 +126,5 @@ public class InicioOperadorController implements Initializable {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-*/
-}
+*
+}*/

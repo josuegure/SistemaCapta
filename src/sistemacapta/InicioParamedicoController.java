@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 /**
  * FXML Controller class
  *
@@ -87,7 +88,7 @@ public class InicioParamedicoController implements Initializable {
     }
         private void mostrarVentanaSeleccion() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sistemacapta/ReportesOperadores.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sistemacapta/ReportesParamedicos.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) btnIniciarSesionParame.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -96,4 +97,10 @@ public class InicioParamedicoController implements Initializable {
             e.printStackTrace();
         }
     }
+        @FXML
+private void handleKeyPress(KeyEvent event) {
+    if (event.getCode().toString().equals("ENTER")) {
+        iniciarSesion();
+    }
+}
 }

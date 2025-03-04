@@ -8,15 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.*; 
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
-
 import javafx.collections.ObservableList;
 
 public class ReportesOperadoresController implements Initializable {
 
-    @FXML private TextField txtFolio, txtCalle, txtColonia, txtReferencia, txtOtroContacto, txtOtroTipoAtendido;
+    @FXML private TextField txtFolio, txtEmpleado,txtCalle, txtColonia, txtReferencia, txtOtroContacto, txtOtroTipoAtendido;
     @FXML private TextArea txtEspecificaciones, txtResultados;
     @FXML private ComboBox<String> comboGenero, comboClasificacion, comboDiaSemana, comboContacto, comboTipoAtendido;
     @FXML private DatePicker datePickerFecha;
@@ -27,7 +26,10 @@ public class ReportesOperadoresController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {  
         comboGenero.setItems(FXCollections.observableArrayList("Masculino", "Femenino"));
-        comboClasificacion.setItems(FXCollections.observableArrayList("Rescate acuático", "Asistencias médicas", "Muerte por sumersión", "Otro"));
+        comboClasificacion.setItems(FXCollections.observableArrayList("Rescate acuático", "Accidentes Acuáticos", "Apoyo a prestadores de servicios turista", 
+        "Muerte por sumersión", "Incendio de casa habitación y/o vehículo", "Desaparecido en el mar", "Muerte Natural/Accidental", "Suicidio", "Homicidio"
+        ,"Menores localizados", "Adultos localizados", "Quejas/Fraudes/Extorsión", "Robo con violencia", "Fraude cibernético", "Desove de tortugas"
+        ,"Asistencias mecánicas SSP/Asist Vial", "Asist locales CAPTA", "Angeles verdes/Asist mecánicas", "Falsas alarmas/no efectadas", "Extranjeros", "Asistencias turísticas"));
         comboDiaSemana.setItems(FXCollections.observableArrayList("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"));
         comboContacto.setItems(FXCollections.observableArrayList("Directo", "911","Whatsapp", "Otro"));
         comboTipoAtendido.setItems(FXCollections.observableArrayList("Local", "Turista", "Sin especificar"));
@@ -109,7 +111,7 @@ public class ReportesOperadoresController implements Initializable {
         if ("Sin especificar".equals(tipoAtendido)) {
             tipoAtendido = txtOtroTipoAtendido.getText();
         }
-
+        String empleado = txtEmpleado.getText();
         String genero = comboGenero.getValue();
         String calle = txtCalle.getText();
         String colonia = txtColonia.getText();
@@ -123,7 +125,7 @@ public class ReportesOperadoresController implements Initializable {
 
         // Insertar en la base de datos
         InsertarReporte insertarReporte = new InsertarReporte();
-        insertarReporte.insertarReporte(folio, tipoAtendido, contacto, genero, calle, colonia, referencia, clasificacion, grupoAtencion, diaSemana, fecha, especificaciones, resultados);
+        insertarReporte.insertarReporte(folio, empleado, tipoAtendido, contacto, genero, calle, colonia, referencia, clasificacion, grupoAtencion, diaSemana, fecha, especificaciones, resultados);
 
         // Limpiar campos después de la inserción
        // limpiarCampos();
@@ -131,7 +133,7 @@ public class ReportesOperadoresController implements Initializable {
 
     @FXML
     private void SendToIncidentes(ActionEvent event) {
-        String fxmlFile = "/sistemacapta/ModificarReporteO.fxml";
+        String fxmlFile = "/sistemacapta/GenerarReporteOperador.fxml";
         functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
     }
         @FXML

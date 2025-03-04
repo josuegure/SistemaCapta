@@ -25,7 +25,7 @@
          <children>
             <Pane layoutY="-14.0" prefHeight="71.0" prefWidth="147.0">
                <children>
-                  <Button layoutY="15.0" mnemonicParsing="false" onAction="#Salir" prefHeight="49.0" prefWidth="155.0" styleClass="Botonseleccionado" stylesheets="@style.css" text="       Formato" />
+                  <Button layoutY="15.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="155.0" styleClass="Botonseleccionado" stylesheets="@style.css" text="       Formato" />
                   <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="11.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imgs/documento.png" />
@@ -35,7 +35,7 @@
             </Pane>
             <Pane layoutY="35.0" prefHeight="71.0" prefWidth="147.0">
                <children>
-                  <Button layoutY="15.0" mnemonicParsing="false" onAction="#Salir" prefHeight="49.0" prefWidth="155.0" styleClass="BotonNOseleccionado" stylesheets="@style.css" text="       Incidentes" />
+                  <Button layoutY="15.0" mnemonicParsing="false" onAction="#SendToIncidentes" prefHeight="49.0" prefWidth="155.0" styleClass="BotonNOseleccionado" stylesheets="@style.css" text="       Incidentes" />
                   <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="10.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imgs/RegistrosImg.png" />
@@ -70,12 +70,12 @@
             <Image url="@../imgs/logo1capta%20SF.png" />
          </image>
       </ImageView>
-      <Label layoutX="214.0" layoutY="109.0" text="Registrar incidencia">
+      <Label layoutX="214.0" layoutY="96.0" text="Registrar incidencia">
          <font>
             <Font name="Bernard MT Condensed" size="41.0" />
          </font>
       </Label>
-      <Label layoutX="214.0" layoutY="160.0" text="Por favor rellena la información requerdia" textFill="#614444">
+      <Label layoutX="214.0" layoutY="147.0" text="Por favor rellena la información requerdia" textFill="#614444">
          <font>
             <Font size="13.0" />
          </font>
@@ -120,30 +120,6 @@
                   <Font name="Dubai Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="1.0" layoutY="25.0" text="Clasificación">
-               <font>
-                  <Font name="Dubai Bold" size="15.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="comboClasificacion" layoutY="53.0" prefWidth="150.0" promptText="Clasfificación" />
-            <Label layoutX="178.0" layoutY="27.0" text="Grupo de atención">
-               <font>
-                  <Font name="Dubai Bold" size="15.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="comboGrupoAtencion" layoutX="177.0" layoutY="55.0" prefHeight="32.0" prefWidth="181.0" promptText="Grupo de atención" />
-            <Label layoutX="385.0" layoutY="29.0" text="Día de la semana">
-               <font>
-                  <Font name="Dubai Bold" size="15.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="comboDiaSemana" layoutX="384.0" layoutY="57.0" prefWidth="150.0" promptText="Día de la semana" />
-            <Label layoutX="572.0" layoutY="29.0" text="Fecha">
-               <font>
-                  <Font name="Dubai Bold" size="15.0" />
-               </font>
-            </Label>
-            <DatePicker fx:id="datePickerFecha" layoutX="572.0" layoutY="55.0" />
          </children>
       </Group>
       <Group layoutX="214.0" layoutY="431.0">
@@ -163,21 +139,54 @@
                   <Font name="Dubai Bold" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="btnRegistrar" layoutX="644.0" layoutY="155.0" mnemonicParsing="false" styleClass="botonparamedicos" stylesheets="@style.css" text="Registrar" />
             <TextArea fx:id="txtEspecificaciones" layoutY="55.0" prefHeight="118.0" prefWidth="272.0" />
-            <TextArea fx:id="txtResultados" layoutX="342.0" layoutY="55.0" prefHeight="91.0" prefWidth="272.0" />
+            <TextArea fx:id="txtResultados" layoutX="342.0" layoutY="55.0" prefHeight="119.0" prefWidth="272.0" />
          </children>
       </Group>
-      <Label layoutX="644.0" layoutY="182.0" text="Medio de contacto" textFill="#828282">
+      <Label layoutX="651.0" layoutY="185.0" text="Medio de contacto" textFill="#0d0d0d">
          <font>
             <Font name="Dubai Bold" size="15.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboGenero" layoutX="878.0" layoutY="214.0" prefHeight="32.0" prefWidth="133.0" promptText="Género" />
-      <Label layoutX="877.0" layoutY="187.0" text="Género" />
-      <ComboBox fx:id="comboContacto" layoutX="644.0" layoutY="213.0" prefHeight="32.0" prefWidth="186.0" promptText="Medio de contacto" />
-      <ComboBox fx:id="comboTipoAtendido" layoutX="319.0" layoutY="213.0" prefHeight="32.0" prefWidth="200.0" promptText="Tipo de atención" />
-      <TextField fx:id="txtOtroTipoAtendido" layoutX="531.0" layoutY="214.0" prefHeight="25.0" prefWidth="82.0" />
-      <TextField fx:id="txtOtroContacto" layoutX="763.0" layoutY="157.0" prefHeight="25.0" prefWidth="82.0" />
+      <ComboBox fx:id="comboGenero" layoutX="906.0" layoutY="216.0" prefHeight="19.0" prefWidth="133.0" promptText="Género" />
+      <Label layoutX="909.0" layoutY="177.0" text="Género">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font></Label>
+      <ComboBox fx:id="comboContacto" layoutX="651.0" layoutY="216.0" prefHeight="19.0" prefWidth="147.0" promptText="Medio de contacto" />
+      <ComboBox fx:id="comboTipoAtendido" layoutX="409.0" layoutY="216.0" prefHeight="19.0" prefWidth="133.0" promptText="Tipo de atención" />
+      <TextField fx:id="txtOtroTipoAtendido" layoutX="557.0" layoutY="216.0" prefHeight="25.0" prefWidth="82.0" />
+      <TextField fx:id="txtOtroContacto" layoutX="809.0" layoutY="216.0" prefHeight="25.0" prefWidth="82.0" />
+      <DatePicker fx:id="datePickerFecha" layoutX="843.0" layoutY="402.0" prefHeight="25.0" prefWidth="163.0" />
+      <Label layoutX="845.0" layoutY="373.0" text="Fecha">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboDiaSemana" layoutX="680.0" layoutY="402.0" prefWidth="150.0" promptText="Día de la semana" />
+      <Label layoutX="680.0" layoutY="373.0" text="Día de la semana">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="480.0" layoutY="369.0" prefHeight="17.0" prefWidth="118.0" text="Grupo de atención">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboGrupoAtencion" layoutX="480.0" layoutY="402.0" prefHeight="15.0" prefWidth="181.0" promptText="Grupo de atención" />
+      <ComboBox fx:id="comboClasificacion" layoutX="214.0" layoutY="402.0" prefHeight="25.0" prefWidth="254.0" promptText="Clasificación" />
+      <Label layoutX="215.0" layoutY="373.0" text="Clasificación">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnRegistrar" layoutX="863.0" layoutY="536.0" mnemonicParsing="false" styleClass="botonparamedicos" stylesheets="@style.css" text="Registrar" />
+      <Label layoutX="310.0" layoutY="187.0" text="Número de empleado">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEmpleado" layoutX="310.0" layoutY="215.0" prefHeight="25.0" prefWidth="82.0" promptText="Empleado" />
    </children>
 </AnchorPane>
