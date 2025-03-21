@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
+import javafx.scene.input.KeyEvent;
 /**
  * FXML Controller class
  *
@@ -104,4 +105,10 @@ private void SendToInicioSesionOperador(ActionEvent event) {
     String fxmlFile = "/sistemacapta/InicioOperador.fxml"; // Ajusta la ruta según tu estructura de paquetes
     functions.FunctionsOfClasses.switchToScene(event, fxmlFile);
 } 
+        @FXML
+private void handleKeyPress(KeyEvent event) {
+    if (event.getCode().toString().equals("ENTER")) {
+        InsertarNuevoOperador();
+    }
+}
 }

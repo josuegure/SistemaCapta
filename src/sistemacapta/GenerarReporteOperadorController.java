@@ -1,23 +1,34 @@
 package sistemacapta;
+import com.itextpdf.text.*;
+
+//import java.awt.Font;
+import java.io.*;
+import com.itextpdf.text.Image;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+
+
+import com.itextpdf.text.Paragraph;
 
 import java.net.URL;
 import java.sql.Connection;
-import com.itextpdf.text.*;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfWriter;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,6 +39,32 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import functions.FunctionsOfClasses;
 import javafx.scene.input.KeyEvent;
+
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Color;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.data.category.DefaultCategoryDataset;
+
+
+import java.time.LocalDate;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.labels.CategoryItemLabelGenerator;
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
+//import org.jfree.chart.ui.TextAnchor;  // Mantén esta
+import org.jfree.ui.TextAnchor;  // El correcto
+
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.data.category.CategoryDataset;
+//import org.jfree.chart.ui.TextAnchor;
 
 public class GenerarReporteOperadorController implements Initializable {
 
@@ -103,16 +140,13 @@ public class GenerarReporteOperadorController implements Initializable {
             }
         }
     }
-        //Codigo para los saltos después de cada consulta
-       private void LineJumps( Document document,int limits) throws DocumentException {
-           for(int i = 0; i < limits; i++){
-           document.add(new Paragraph(Chunk.NEWLINE));
-           }
-       }
-        private void GenerarReporteOperador(ActionEvent event) throws FileNotFoundException {
-    LocalDate selectedDate = StartDate.getValue();
-    LocalDate endDate = EndDate.getValue();
-    
+  
+                      
+   // Código para los saltos después de cada consulta
+        private void GenerarReporteOperador(ActionEvent event) throws FileNotFoundException, IOException {
+            LocalDate selectedDate = StartDate.getValue();
+            LocalDate endDate = EndDate.getValue();
+
     if (selectedDate != null && endDate != null) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Guardar reporte como");
@@ -125,84 +159,53 @@ public class GenerarReporteOperadorController implements Initializable {
             if (!filePath.toLowerCase().endsWith(".pdf")) {
                 filePath += ".pdf";
             }
+
             Document document = new Document();
             try {
                 PdfWriter.getInstance(document, new FileOutputStream(filePath));
                 document.open();
-                // Agregar imagen
+
+                // Agregar imagen del logo
                 String imagePath = "src/imgs/logo2capta SF.png"; 
                 try {
                     Image image = Image.getInstance(imagePath);
                     image.scaleToFit(200, 100);
                     document.add(image);
-                   // LineJumps(document, 1);
                     document.add(new Paragraph("Fecha de reporte: " + selectedDate + " al " + endDate));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                // Conexión a la base de datos
                 try (Connection conn = ConnectionDB.connect()) {
+                    // **Sección de Conteos**
+                    // **Total de Atendidos**
+                    String totalQuery = "SELECT COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ?";
+                    int totalAtendidos = ejecutarConsultaConteo(conn, totalQuery, selectedDate, endDate);
+                    document.add(new Paragraph("Total de Atendidos: " + totalAtendidos, FontFactory.getFont(FontFactory.HELVETICA, 12)));
+                    document.add(Chunk.NEWLINE);
 
-                    // Total de emergencias
-                    ejecutarConsulta(document, conn, 
-                        "Emergencias totales atendidas", 
-                        "SELECT COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ?", 
-                        selectedDate, endDate);
+                    // **Consultas y Conteos**
+                    ejecutarConsultaConteoYAgregarTexto(conn, document, "Género", "SELECT genero, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY genero", selectedDate, endDate);
+                    ejecutarConsultaConteoYAgregarTexto(conn, document, "Tipo Atendido", "SELECT tipo_atendido, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY tipo_atendido", selectedDate, endDate);
+                    ejecutarConsultaConteoYAgregarTexto(conn, document, "Medio de Contacto", "SELECT contacto, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY contacto", selectedDate, endDate);
+                    ejecutarConsultaConteoYAgregarTexto(conn, document, "Grupo de Atención", "SELECT grupo_atencion, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY grupo_atencion", selectedDate, endDate);
+                    ejecutarConsultaConteoYAgregarTexto(conn, document, "Clasificación", "SELECT clasificacion, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY clasificacion", selectedDate, endDate);
 
-                    // Género (Hombres y Mujeres)
-                    String queryGenero = "SELECT genero, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY genero";
-                    try (PreparedStatement stmt = conn.prepareStatement(queryGenero)) {
-                        stmt.setDate(1, java.sql.Date.valueOf(selectedDate));
-                        stmt.setDate(2, java.sql.Date.valueOf(endDate));
+                    document.add(new Paragraph("Gráficas:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
+                    document.add(Chunk.NEWLINE);
 
-                        int totalMasculinos = 0, totalFemeninos = 0;
-                        try (ResultSet rs = stmt.executeQuery()) {
-                            while (rs.next()) {
-                                String genero = rs.getString(1).toLowerCase();
-                                int count = rs.getInt(2);
-                                if (genero.equals("masculino")) {
-                                    totalMasculinos = count;
-                                } else if (genero.equals("femenino")) {
-                                    totalFemeninos = count;
-                                }
-                            }
-                        }
-
-                        document.add(new Paragraph("Total de Masculinos atendidos: " + totalMasculinos));
-                        document.add(new Paragraph("Total de Femeninas atendidas: " + totalFemeninos));
-                        LineJumps(document, 1); // Espacio en blanco
-                        //document.add(new Paragraph ("===================="));
-                    }
-
-                    // Tipo de atendido
-                    ejecutarConsultaConGrupo(document, conn, 
-                        "Atendidos", 
-                        "SELECT tipo_atendido, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY tipo_atendido", 
-                        selectedDate, endDate);
-                    
-                     //Medio de contacto
-                    ejecutarConsultaConGrupo(document, conn, 
-                        "Medio de contacto", 
-                        "SELECT contacto, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY contacto", 
-                        selectedDate, endDate);
-                    // Grupo de atención
-                    ejecutarConsultaConGrupo(document, conn, 
-                        "Grupo de Atención", 
-                        "SELECT grupo_atencion, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY grupo_atencion", 
-                        selectedDate, endDate);
-
-                    // Clasificación
-                    ejecutarConsultaConGrupo(document, conn, 
-                        "Clasificación", 
-                        "SELECT clasificacion, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY clasificacion", 
-                        selectedDate, endDate);
+                    // **Generación de Gráficas**
+                    generarGrafica(conn, document, "Género", "SELECT genero, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY genero", selectedDate, endDate, "GraficaGenero.png");
+                    generarGrafica(conn, document, "Tipo Atendido", "SELECT tipo_atendido, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY tipo_atendido", selectedDate, endDate, "GraficaTipoAtendido.png");
+                    generarGrafica(conn, document, "Medio de Contacto", "SELECT contacto, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY contacto", selectedDate, endDate, "GraficaMedioContacto.png");
+                    generarGrafica(conn, document, "Grupo de Atención", "SELECT grupo_atencion, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY grupo_atencion", selectedDate, endDate, "GraficaGrupoAtencion.png");
+                    generarGrafica(conn, document, "Clasificación", "SELECT clasificacion, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY clasificacion", selectedDate, endDate, "GraficaClasificacion.png");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+
                 document.close();
                 functions.FunctionsOfClasses.showAlertGood(Alert.AlertType.INFORMATION, "", "Reporte generado exitosamente en " + filePath);
-
             } catch (DocumentException e) {
                 e.printStackTrace();
             }
@@ -214,40 +217,79 @@ public class GenerarReporteOperadorController implements Initializable {
     }
 }
 
-        // Método para ejecutar consultas generales con conteo
-        private void ejecutarConsulta(Document document, Connection conn, String titulo, String query, LocalDate startDate, LocalDate endDate) throws SQLException, DocumentException {
+        // **Ejecuta una consulta de conteo total**
+        private int ejecutarConsultaConteo(Connection conn, String query, LocalDate startDate, LocalDate endDate) throws SQLException {
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setDate(1, java.sql.Date.valueOf(startDate));
                 stmt.setDate(2, java.sql.Date.valueOf(endDate));
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
-                        int total = rs.getInt(1);
-                        document.add(new Paragraph(titulo + ": " + total));
-                        LineJumps(document, 1); // Espacio en blanco
-                        //document.add(new Paragraph ("===================="));
+                        return rs.getInt(1);
                     }
                 }
             }
+            return 0;
         }
 
-        // Método para ejecutar consultas con agrupamiento
-        private void ejecutarConsultaConGrupo(Document document, Connection conn, String titulo, String query, LocalDate startDate, LocalDate endDate) throws SQLException, DocumentException {
+        // **Ejecuta una consulta y agrega el conteo de categorías al PDF**
+        private void ejecutarConsultaConteoYAgregarTexto(Connection conn, Document document, String titulo, String query, LocalDate startDate, LocalDate endDate) throws SQLException, DocumentException {
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setDate(1, java.sql.Date.valueOf(startDate));
                 stmt.setDate(2, java.sql.Date.valueOf(endDate));
                 try (ResultSet rs = stmt.executeQuery()) {
-                    document.add(new Paragraph(titulo + ":"));
+                    document.add(new Paragraph(titulo + ":", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
                     while (rs.next()) {
-                        String categoria = rs.getString(1);
+                       String categoria = rs.getString(1);
                         int count = rs.getInt(2);
-                        document.add(new Paragraph(" - " + categoria + ": " + count));
+                       document.add(new Paragraph(" - " + categoria + ": " + count, FontFactory.getFont(FontFactory.HELVETICA, 12)));
                     }
-                    LineJumps(document, 1); // Espacio en blanco
-                    //document.add(new Paragraph("===================="));
+                    document.add(Chunk.NEWLINE);
                 }
             }
         }
 
+        // **Genera una gráfica y la añade al PDF**
+        private void generarGrafica(Connection conn, Document document, String titulo, String query, LocalDate startDate, LocalDate endDate, String nombreImagen) throws SQLException, DocumentException, IOException {
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setDate(1, java.sql.Date.valueOf(startDate));
+                stmt.setDate(2, java.sql.Date.valueOf(endDate));
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        dataset.addValue(rs.getInt(2), titulo, rs.getString(1));
+                    }
+                }
+            }
+
+            if (!dataset.getRowKeys().isEmpty()) {
+                JFreeChart chart = ChartFactory.createBarChart(titulo, "", "Cantidad", dataset);
+                CategoryPlot plot = chart.getCategoryPlot();
+                BarRenderer renderer = (BarRenderer) plot.getRenderer();
+
+                // Cambiar el color de las barras
+                renderer.setSeriesPaint(0, new Color(181,52,52));
+
+                // Hacer las barras más delgadas
+                renderer.setMaximumBarWidth(0.05);
+
+                // Mostrar valores en las barras
+            renderer.setSeriesItemLabelGenerator(0, new StandardCategoryItemLabelGenerator());
+            renderer.setSeriesItemLabelsVisible(0, true);
+            renderer.setSeriesItemLabelFont(0, new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+            renderer.setSeriesItemLabelPaint(0, Color.BLACK);
+            
+                // Guardar la imagen y agregarla al PDF
+                File chartFile = new File(nombreImagen);
+                ChartUtilities.saveChartAsPNG(chartFile, chart, 500, 300);
+                Image img = Image.getInstance(nombreImagen);
+                img.scaleToFit(500, 300);
+                document.add(img);
+                document.add(Chunk.NEWLINE);
+            } else {
+                document.add(new Paragraph("No hay datos para " + titulo + "."));
+            }
+        }
+        //  GENERAR REPORTE POR FOLIO
         @FXML
     private void generarPDFPorFolio() {
         String folio = txtFolio.getText().trim();
@@ -284,8 +326,10 @@ public class GenerarReporteOperadorController implements Initializable {
                 }
                 
                 // Agregar título principal
-                Font titleFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
-                Paragraph title = new Paragraph("Reporte de Operador", titleFont);
+            com.itextpdf.text.Font titleFont = FontFactory.getFont(FontFactory.HELVETICA, 18, com.itextpdf.text.Font.BOLD);
+
+            Paragraph title = new Paragraph("Reporte de Operador", titleFont);
+
                 title.setAlignment(Element.ALIGN_CENTER);
                 document.add(title);
                 document.add(new Paragraph("\n"));
@@ -297,9 +341,8 @@ public class GenerarReporteOperadorController implements Initializable {
                     if (rs.next()) {
                         PdfPTable table = new PdfPTable(2);
                         table.setWidthPercentage(100);
-                        
-                        Font headerFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
-                        Font dataFont = new Font(Font.FontFamily.HELVETICA, 12);
+            com.itextpdf.text.Font headerFont = FontFactory.getFont(FontFactory.HELVETICA, 12, com.itextpdf.text.Font.BOLD);
+            com.itextpdf.text.Font dataFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
                         
                         addTableHeader(table, "Folio", rs.getString("folio"), headerFont, dataFont);
                         addTableHeader(table, "Número de operador", rs.getString("Numero_operador"), headerFont, dataFont);
@@ -333,12 +376,12 @@ public class GenerarReporteOperadorController implements Initializable {
         }
     }
     
-    private void addTableHeader(PdfPTable table, String header, String data, Font headerFont, Font dataFont) {
-        PdfPCell headerCell = new PdfPCell(new Paragraph(header, headerFont));
-        headerCell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-        table.addCell(headerCell);
-        table.addCell(new PdfPCell(new Paragraph(data, dataFont)));
-    }
+private void addTableHeader(PdfPTable table, String header, String data, com.itextpdf.text.Font headerFont, com.itextpdf.text.Font dataFont) {
+    PdfPCell headerCell = new PdfPCell(new Paragraph(header, headerFont));
+    headerCell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+    table.addCell(headerCell);
+    table.addCell(new PdfPCell(new Paragraph(data, dataFont)));
+}
         @FXML
     private void SendToFormato(ActionEvent event) {
         String fxmlFile = "/sistemacapta/ReportesOperadores.fxml";
@@ -357,3 +400,4 @@ public class GenerarReporteOperadorController implements Initializable {
         FunctionsOfClasses.switchToScene(event, fxmlFile);
     }
 }
+

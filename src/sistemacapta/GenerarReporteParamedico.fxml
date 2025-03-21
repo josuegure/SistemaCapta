@@ -114,14 +114,14 @@
             <Font name="Dubai Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtFolio" layoutX="216.0" layoutY="489.0" onKeyPressed="#buscarFecha" prefHeight="25.0" prefWidth="82.0" promptText="Folio" />
+      <TextField fx:id="txtFolio" layoutX="216.0" layoutY="489.0" prefHeight="25.0" prefWidth="82.0" promptText="Folio" />
       <Label layoutX="330.0" layoutY="461.0" text="Fecha de realizacion">
          <font>
             <Font name="Dubai Bold" size="15.0" />
          </font>
       </Label>
       <TextField fx:id="txtFecha" layoutX="330.0" layoutY="489.0" prefHeight="25.0" prefWidth="123.0" promptText="Fecha de realización" />
-      <Button fx:id="btnEliminar" layoutX="545.0" layoutY="487.0" mnemonicParsing="false" onAction="#eliminarReporte" styleClass="botonregistro" text="Eliminar" />
+      <Button layoutX="545.0" layoutY="487.0" mnemonicParsing="false" styleClass="botonregistro" text="Eliminar" />
       <Button layoutX="727.0" layoutY="487.0" mnemonicParsing="false" styleClass="botonregistro" text="Imprimir" />
    </children>
 </AnchorPane>
