@@ -51,11 +51,9 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import java.time.LocalDate;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
-import org.jfree.chart.labels.CategoryItemLabelGenerator;
-import org.jfree.chart.labels.ItemLabelAnchor;
-import org.jfree.chart.labels.ItemLabelPosition;
+
 import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 //import org.jfree.chart.ui.TextAnchor;  // Mantén esta
@@ -142,10 +140,10 @@ public class GenerarReporteOperadorController implements Initializable {
     }
   
                       
-   // Código para los saltos después de cada consulta
-        private void GenerarReporteOperador(ActionEvent event) throws FileNotFoundException, IOException {
-            LocalDate selectedDate = StartDate.getValue();
-            LocalDate endDate = EndDate.getValue();
+// Código para los saltos después de cada consulta
+private void GenerarReporteOperador(ActionEvent event) throws FileNotFoundException, IOException {
+    LocalDate selectedDate = StartDate.getValue();
+    LocalDate endDate = EndDate.getValue();
 
     if (selectedDate != null && endDate != null) {
         JFileChooser fileChooser = new JFileChooser();
@@ -194,12 +192,12 @@ public class GenerarReporteOperadorController implements Initializable {
                     document.add(new Paragraph("Gráficas:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14)));
                     document.add(Chunk.NEWLINE);
 
-                    // **Generación de Gráficas**
-                    generarGrafica(conn, document, "Género", "SELECT genero, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY genero", selectedDate, endDate, "GraficaGenero.png");
-                    generarGrafica(conn, document, "Tipo Atendido", "SELECT tipo_atendido, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY tipo_atendido", selectedDate, endDate, "GraficaTipoAtendido.png");
-                    generarGrafica(conn, document, "Medio de Contacto", "SELECT contacto, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY contacto", selectedDate, endDate, "GraficaMedioContacto.png");
-                    generarGrafica(conn, document, "Grupo de Atención", "SELECT grupo_atencion, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY grupo_atencion", selectedDate, endDate, "GraficaGrupoAtencion.png");
-                    generarGrafica(conn, document, "Clasificación", "SELECT clasificacion, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY clasificacion", selectedDate, endDate, "GraficaClasificacion.png");
+                    // **Generación de Gráficas con el máximo basado en totalAtendidos**
+                    generarGrafica(conn, document, "Género", "SELECT genero, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY genero", selectedDate, endDate, "GraficaGenero.png", totalAtendidos);
+                    generarGrafica(conn, document, "Tipo Atendido", "SELECT tipo_atendido, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY tipo_atendido", selectedDate, endDate, "GraficaTipoAtendido.png", totalAtendidos);
+                    generarGrafica(conn, document, "Medio de Contacto", "SELECT contacto, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY contacto", selectedDate, endDate, "GraficaMedioContacto.png", totalAtendidos);
+                    generarGrafica(conn, document, "Grupo de Atención", "SELECT grupo_atencion, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY grupo_atencion", selectedDate, endDate, "GraficaGrupoAtencion.png", totalAtendidos);
+                    generarGrafica(conn, document, "Clasificación", "SELECT clasificacion, COUNT(*) FROM reporteoperadores WHERE fecha BETWEEN ? AND ? GROUP BY clasificacion", selectedDate, endDate, "GraficaClasificacion.png", totalAtendidos);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -216,6 +214,59 @@ public class GenerarReporteOperadorController implements Initializable {
         System.out.println("No se ha seleccionado una fecha.");
     }
 }
+
+// **Genera una gráfica con el máximo en el eje Y basado en totalAtendidos**
+// **Genera una gráfica y la añade al PDF**
+private void generarGrafica(Connection conn, Document document, String titulo, String query, LocalDate startDate, LocalDate endDate, String nombreImagen, int totalAtendidos) throws SQLException, DocumentException, IOException {
+    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+    try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        stmt.setDate(1, java.sql.Date.valueOf(startDate));
+        stmt.setDate(2, java.sql.Date.valueOf(endDate));
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                dataset.addValue(rs.getInt(2), titulo, rs.getString(1));
+            }
+        }
+    }
+
+    if (!dataset.getRowKeys().isEmpty()) {
+        JFreeChart chart = ChartFactory.createBarChart(titulo, "", "Cantidad", dataset);
+        CategoryPlot plot = chart.getCategoryPlot();
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        
+        
+         // **Usar el total de reportes como el valor máximo en el eje Y**
+        plot.getRangeAxis().setUpperBound(totalAtendidos);
+
+
+        // Cambiar el color de las barras
+        renderer.setSeriesPaint(0, new Color(181,52,52));
+
+        // Hacer las barras más delgadas
+        renderer.setMaximumBarWidth(0.05);
+
+        // Mostrar valores en las barras
+        renderer.setSeriesItemLabelGenerator(0, new StandardCategoryItemLabelGenerator());
+        renderer.setSeriesItemLabelsVisible(0, true);
+        renderer.setSeriesItemLabelFont(0, new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+        renderer.setSeriesItemLabelPaint(0, Color.BLACK);
+        
+        // Ajustar las etiquetas en el eje X
+        CategoryAxis categoryAxis = plot.getDomainAxis();
+        categoryAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);  // Rota las etiquetas 45 grados
+
+        // Guardar la imagen y agregarla al PDF
+        File chartFile = new File(nombreImagen);
+        ChartUtilities.saveChartAsPNG(chartFile, chart, 500, 300);
+        Image img = Image.getInstance(nombreImagen);
+        img.scaleToFit(500, 300);
+        document.add(img);
+        document.add(Chunk.NEWLINE);
+    } else {
+        document.add(new Paragraph("No hay datos para " + titulo + "."));
+    }
+}
+
 
         // **Ejecuta una consulta de conteo total**
         private int ejecutarConsultaConteo(Connection conn, String query, LocalDate startDate, LocalDate endDate) throws SQLException {
@@ -267,10 +318,10 @@ public class GenerarReporteOperadorController implements Initializable {
                 BarRenderer renderer = (BarRenderer) plot.getRenderer();
 
                 // Cambiar el color de las barras
-                renderer.setSeriesPaint(0, new Color(181,52,52));
+                //renderer.setSeriesPaint(0, new Color(181,52,52));
 
                 // Hacer las barras más delgadas
-                renderer.setMaximumBarWidth(0.05);
+            //    renderer.setMaximumBarWidth(0.05);
 
                 // Mostrar valores en las barras
             renderer.setSeriesItemLabelGenerator(0, new StandardCategoryItemLabelGenerator());
