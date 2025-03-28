@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="ComboAtendido" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="659.0" prefWidth="1368.0" styleClass="fondo" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemacapta.ReportesParamedicos2Controller">
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
+   <children>
+      <AnchorPane layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="155.0" styleClass="panel" stylesheets="@style.css">
+         <children>
+            <Pane layoutY="-14.0" prefHeight="71.0" prefWidth="147.0">
+               <children>
+                  <Button layoutY="15.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="155.0" styleClass="Botonseleccionado" stylesheets="@style.css" text="       Formato" />
+                  <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="11.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/documento.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane layoutY="35.0" prefHeight="71.0" prefWidth="147.0">
+               <children>
+                  <Button layoutY="15.0" mnemonicParsing="false" onAction="#SendToIncidentes" prefHeight="49.0" prefWidth="155.0" styleClass="BotonNOseleccionado" stylesheets="@style.css" text="       Incidentes" />
+                  <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="10.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/RegistrosImg.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane layoutY="474.0" prefHeight="71.0" prefWidth="147.0">
+               <children>
+                  <Button layoutX="-4.0" layoutY="22.0" mnemonicParsing="false" onAction="#Salir" prefHeight="49.0" prefWidth="155.0" styleClass="BotonSalir" stylesheets="@style.css" text="          Salir" />
+                  <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="13.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/cerrar_sesion.png" />
+                     </image>
+                  </ImageView>
+               </children></Pane>
+            <Pane layoutX="-1.0" layoutY="86.0" prefHeight="71.0" prefWidth="147.0">
+               <children>
+                  <Button layoutY="12.0" mnemonicParsing="false" onAction="#SendToModificar" prefHeight="49.0" prefWidth="155.0" styleClass="BotonNOseleccionado" stylesheets="@style.css" text="       Modificar" />
+                  <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="16.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/modificar.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b53434" height="111.0" layoutX="-2.0" layoutY="-1.0" stroke="#b53434" strokeType="INSIDE" width="1368.0" />
+      <ImageView fitHeight="73.0" fitWidth="200.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imgs/logo1capta%20SF.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnRegistrarCompleto" layoutX="1085.0" layoutY="569.0" mnemonicParsing="false" styleClass="botonparamedicos" stylesheets="@style.css" text="Registrar">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Button>
+      <Label layoutX="179.0" layoutY="139.0" text="6. EVALUACIÓN INICIAL" textFill="#614444">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="181.0" layoutY="174.0" text="Nivel de consciencia">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboNivel" layoutX="182.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="155.0" promptText="Nivel de consciencia" />
+      <Label layoutX="371.0" layoutY="174.0" text="Vía aérea">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboVia" layoutX="371.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="155.0" promptText="Vía aérea" />
+      <Label layoutX="557.0" layoutY="174.0" prefHeight="22.0" prefWidth="141.0" text="Reflejo de deglución">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboReflejo" layoutX="557.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="155.0" promptText="Reflejo de deglución" />
+      <Label layoutX="826.0" layoutY="163.0" text="Ventilación" textFill="#614444">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="826.0" layoutY="198.0" prefHeight="22.0" prefWidth="93.0" text="Observación">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboObservacion" layoutX="826.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="155.0" promptText="Observación" />
+      <Label layoutX="1026.0" layoutY="187.0" prefHeight="22.0" prefWidth="93.0" text="Auscultación">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboAuscul" layoutX="1026.0" layoutY="209.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="200.0" promptText="Auscultación" />
+      <Label layoutX="910.0" layoutY="294.0" prefHeight="22.0" prefWidth="93.0" text="Hemitórax">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboHemitorax" layoutX="910.0" layoutY="319.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="155.0" promptText="Hemitórax" />
+      <Label layoutX="1108.0" layoutY="283.0" prefHeight="22.0" prefWidth="49.0" text="Sitio">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboSitio" layoutX="1108.0" layoutY="308.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="200.0" promptText="Sitio" />
+      <Label layoutX="183.0" layoutY="241.0" text="Circulación" textFill="#614444">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="183.0" layoutY="268.0" text="Presencia de pulsos">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboPulsos" layoutX="182.0" layoutY="292.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="155.0" promptText="Presencia de pulsos" />
+      <Label layoutX="557.0" layoutY="268.0" text="Calidad">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboCalidad" layoutX="564.0" layoutY="305.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="155.0" promptText="Calidad" />
+      <Label layoutX="371.0" layoutY="267.0" text="Piel">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboPiel" layoutX="371.0" layoutY="292.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="155.0" promptText="Piel" />
+      <Label layoutX="746.0" layoutY="267.0" text="Características">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboCarac" layoutX="746.0" layoutY="292.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="155.0" promptText="Características" />
+      <Label layoutX="179.0" layoutY="334.0" text="7. EVALUACIÓN SECUNDARIA" textFill="#614444">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="180.0" layoutY="374.0" text="Interrogatorio" textFill="#614444">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="185.0" layoutY="402.0" text="Alergias">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtAlergia" layoutX="182.0" layoutY="424.0" promptText="Alergias" />
+      <Label layoutX="372.0" layoutY="402.0" text="Atendido por primer correspondiente">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="664.0" layoutY="378.0" text="Medicamentos que esta ingiriendo">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtMedicamento" layoutX="664.0" layoutY="400.0" prefHeight="26.0" prefWidth="230.0" promptText="Medicamentos que esta ingiriendo" />
+      <Label layoutX="913.0" layoutY="406.0" text="Enfermedades y cirugías previas">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEnfermedades" layoutX="913.0" layoutY="428.0" prefHeight="26.0" prefWidth="230.0" promptText="Enfermedades y cirugias previas" />
+      <Label layoutX="1162.0" layoutY="406.0" text="Condición del paciente">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboCondicion" layoutX="1160.0" layoutY="428.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="165.0" promptText="Condición del paciente" />
+      <Label layoutX="1215.0" layoutY="491.0" text="Prioridad">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboPrioridad" layoutX="1209.0" layoutY="513.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="94.0" promptText="Prioridad" />
+      <Label layoutX="183.0" layoutY="464.0" text="8. TRATAMIENTO" textFill="#614444">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="181.0" layoutY="495.0" text="Control de hemorragias">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboHemorragia" layoutX="180.0" layoutY="517.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="172.0" promptText="Control de hemorragias" />
+      <Label layoutX="411.0" layoutY="495.0" text="Vías venosas">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboVias" layoutX="411.0" layoutY="517.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="172.0" promptText="Vías venosas" />
+      <Label layoutX="317.0" layoutY="562.0" text="Sitio de aplicación">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboAplicacion" layoutX="314.0" layoutY="584.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="172.0" promptText="Sitio de aplicación" />
+      <Label layoutX="612.0" layoutY="499.0" text="Tipo de soluciones">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboSoluciones" layoutX="612.0" layoutY="521.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="172.0" promptText="Tipo de soluciones" />
+      <Label layoutX="530.0" layoutY="566.0" text="Manejo farmacológico y terapia eléctrica">
+         <font>
+            <Font name="Dubai Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboManejo" layoutX="530.0" layoutY="588.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="269.0" promptText="Manejo farmacológico y terapia eléctrica" />
+      <ComboBox fx:id="comboAtendido" layoutX="369.0" layoutY="424.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="249.0" promptText="Atendido por primer correspondiente" />
+      <Button layoutX="814.0" layoutY="589.0" mnemonicParsing="false" onAction="#regresar" styleClass="botonparamedicos" text="Regresar" />
+   </children>
+</AnchorPane>
